@@ -1,0 +1,28 @@
+name: Test_pipeline_2
+steps:
+  - name: test-2
+    type: bash
+    setup:
+      runtime:
+        type: image
+        image:
+          custom:
+            name: drydock/c7node
+            tag: master
+            options: '--env Villa=good'
+    triggeredBy:
+      resources:
+        - sample_jobQ
+    execution:
+      onExecute:
+        - printenv
+        - echo "hi"
+  - name: test4
+    type: bash
+    triggeredBy:
+      steps:
+        - test3
+    execution:
+      onExecute:
+        - printenv
+        - echo "66"
